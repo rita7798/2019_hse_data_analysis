@@ -1,0 +1,28 @@
+---
+title: "hw2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+df <- read.csv("https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/rita7798/hw2_Bayesian_inference/hw2_phoible.csv")
+```
+
+###2.1
+```{r echo=FALSE}
+df$proportion <- df$consonants / df$phonemes
+result <- df[df$proportion == max(df$proportion),]
+result$language
+
+
+###2.2
+```{r echo=FALSE}
+a = 9.300246
+b = 4.4545
+df$bayes <- abs((df$proportion)-((df$consonants+a)/(df$phonemes+a+b)))
+df %>%
+  arrange(desc(bayes)) %>% 
+  select(language) -> language
+head(language)
+```
